@@ -6,6 +6,8 @@ import (
 
 	errorsmod "cosmossdk.io/errors"
 
+	"github.com/davecgh/go-spew/spew"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -215,6 +217,8 @@ func checkTrustedHeader(header *Header, consState *ConsensusState) error {
 	// assert that trustedVals is NextValidators of last trusted header
 	// to do this, we check that trustedVals.Hash() == consState.NextValidatorsHash
 	tvalHash := tmTrustedValidators.Hash()
+	spew.Dump(tmTrustedValidators)
+	fmt.Printf("CHECK TRUSTED %x %s\n", tvalHash, consState.NextValidatorsHash)
 	if !bytes.Equal(consState.NextValidatorsHash, tvalHash) {
 		return errorsmod.Wrapf(
 			ErrInvalidValidatorSet,

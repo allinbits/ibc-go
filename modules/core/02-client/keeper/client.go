@@ -1,6 +1,8 @@
 package keeper
 
 import (
+	"fmt"
+
 	metrics "github.com/armon/go-metrics"
 
 	errorsmod "cosmossdk.io/errors"
@@ -56,6 +58,7 @@ func (k Keeper) CreateClient(
 
 // UpdateClient updates the consensus state and the state root from a provided header.
 func (k Keeper) UpdateClient(ctx sdk.Context, clientID string, clientMsg exported.ClientMessage) error {
+	fmt.Println("UPDATE CLIENT")
 	clientState, found := k.GetClientState(ctx, clientID)
 	if !found {
 		return errorsmod.Wrapf(types.ErrClientNotFound, "cannot update client with ID %s", clientID)

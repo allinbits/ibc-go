@@ -287,6 +287,10 @@ func (chain *TestChain) QueryConsensusStateProof(clientID string) ([]byte, clien
 func (chain *TestChain) NextBlock() {
 	res := chain.App.EndBlock(abci.RequestEndBlock{Height: chain.CurrentHeader.Height})
 
+	fmt.Println("NEXT BLOCK")
+	defer func() {
+		fmt.Println("END NEXTBLOCK")
+	}()
 	chain.App.Commit()
 
 	// set the last header to the current header

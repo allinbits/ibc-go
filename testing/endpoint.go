@@ -2,6 +2,7 @@ package ibctesting
 
 import (
 	"fmt"
+	"runtime/debug"
 	"strings"
 
 	"github.com/stretchr/testify/require"
@@ -130,6 +131,10 @@ func (endpoint *Endpoint) CreateClient() (err error) {
 
 // UpdateClient updates the IBC client associated with the endpoint.
 func (endpoint *Endpoint) UpdateClient() (err error) {
+	fmt.Println("TESTING UPDATE CLIENT", string(debug.Stack()))
+	defer func() {
+		fmt.Println("END TESTING UPDATE CLIENT")
+	}()
 	// ensure counterparty has committed state
 	endpoint.Chain.Coordinator.CommitBlock(endpoint.Counterparty.Chain)
 
